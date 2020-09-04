@@ -1,29 +1,29 @@
 package com.joehxblog.tictactoe.logic;
 
 public class TicTacToeGame {
-    private TicTacToeBitBoard xBoard = new TicTacToeBitBoard();
-    private TicTacToeBitBoard oBoard = new TicTacToeBitBoard();
+    private final TicTacToeBitBoard xBoard = new TicTacToeBitBoard();
+    private final TicTacToeBitBoard oBoard = new TicTacToeBitBoard();
 
     private boolean xTurn = true; // o's turn when xTurn = false
 
-    public boolean canPlayPosition(int x, int y) {
-        return xBoard.getPosition(x,y) && oBoard.getPosition(x,y);
+    public boolean canPlayPosition(final int x, final int y) {
+        return this.xBoard.getPosition(x,y) && this.oBoard.getPosition(x,y);
     }
 
     public boolean hasWinner() {
-        return xBoard.hasWon() || oBoard.hasWon();
+        return this.xBoard.hasWon() || this.oBoard.hasWon();
     }
 
-    public void playPosition(int x, int y) {
-        if (canPlayPosition(x,y)) {
+    public void playPosition(final int x, final int y) {
+        if (canPlayPosition(x,y) && !hasWinner()) {
 
-            if (xTurn) {
-                xBoard.playPosition(x, y);
+            if (this.xTurn) {
+                this.xBoard.playPosition(x, y);
             } else {
-                oBoard.playPosition(x, y);
+                this.oBoard.playPosition(x, y);
             }
 
-            xTurn = !xTurn;
+            this.xTurn = !this.xTurn;
         }
     }
 

@@ -1,6 +1,5 @@
 package com.joehxblog.tictactoe.logic;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +20,7 @@ class TicTacToeBitBoardTest {
     TicTacToeBitBoard board;
 
     static Stream<Arguments> positions() {
-        List<Arguments> list = new ArrayList<>();
+        final List<Arguments> list = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -43,15 +42,15 @@ class TicTacToeBitBoardTest {
                 createPlays(new int[]{0, 0}, new int[]{0, 1}));
     }
 
-    static List<int[]> createPlays(int[]... plays) {
-        List<int[]> list = new ArrayList<>();
+    static List<int[]> createPlays(final int[]... plays) {
+        final List<int[]> list = new ArrayList<>();
         Collections.addAll(list, plays);
         return list;
     }
 
     @BeforeEach
     void beforeEach() {
-        board = new TicTacToeBitBoard();
+        this.board = new TicTacToeBitBoard();
     }
 
     @Test
@@ -60,7 +59,7 @@ class TicTacToeBitBoardTest {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                shouldBeFalse = shouldBeFalse || board.getPosition(i,j);
+                shouldBeFalse = shouldBeFalse || this.board.getPosition(i,j);
             }
         }
 
@@ -69,32 +68,32 @@ class TicTacToeBitBoardTest {
 
     @ParameterizedTest
     @MethodSource("positions")
-    void playPosition(int x, int y) {
-        assertFalse(board.getPosition(x,y));
+    void playPosition(final int x, final int y) {
+        assertFalse(this.board.getPosition(x,y));
 
-        board.playPosition(x,y);
+        this.board.playPosition(x,y);
 
-        assertTrue(board.getPosition(x,y));
+        assertTrue(this.board.getPosition(x,y));
     }
 
     @Test
     void hasWon_New() {
-        assertFalse(board.hasWon());
+        assertFalse(this.board.hasWon());
     }
 
     @ParameterizedTest
     @MethodSource("winningPlays")
-    void testWinningGame(List<int[]> plays) {
-        plays.forEach(play -> board.playPosition(play[0], play[1]));
+    void testWinningGame(final List<int[]> plays) {
+        plays.forEach(play -> this.board.playPosition(play[0], play[1]));
 
-        assertTrue(board.hasWon());
+        assertTrue(this.board.hasWon());
     }
 
     @ParameterizedTest
     @MethodSource("losingPlays")
-    void testLosingGame(List<int[]> plays) {
-        plays.forEach(play -> board.playPosition(play[0], play[1]));
+    void testLosingGame(final List<int[]> plays) {
+        plays.forEach(play -> this.board.playPosition(play[0], play[1]));
 
-        assertFalse(board.hasWon());
+        assertFalse(this.board.hasWon());
     }
 }
