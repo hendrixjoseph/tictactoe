@@ -3,49 +3,28 @@ package com.joehxblog.tictactoe.logic;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static com.joehxblog.tictactoe.logic.TestHelper.createPlays;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class TicTacToeBitBoardTest {
 
     TicTacToeBitBoard board;
 
-    static Stream<Arguments> positions() {
-        final List<Arguments> list = new ArrayList<>();
-
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                list.add(arguments(i,j));
-            }
-        }
-
-        return list.stream();
-    }
-
     static Stream<List<int[]>> winningPlays() {
-        return Stream.of(createPlays(new int[]{0, 0}, new int[]{0, 1}, new int[]{0, 2}));
+        return Stream.of(createPlays(0,0, 0,1, 0,2));
     }
 
     static Stream<List<int[]>> losingPlays() {
-        return Stream.of(
-                createPlays(),
-                createPlays(new int[]{0, 0}),
-                createPlays(new int[]{0, 0}, new int[]{0, 1}));
-    }
-
-    static List<int[]> createPlays(final int[]... plays) {
-        final List<int[]> list = new ArrayList<>();
-        Collections.addAll(list, plays);
-        return list;
+        return Stream.of(Collections.emptyList(),
+                createPlays(0,0),
+                createPlays(0,0, 0,1));
     }
 
     @BeforeEach
@@ -67,7 +46,7 @@ class TicTacToeBitBoardTest {
     }
 
     @ParameterizedTest
-    @MethodSource("positions")
+    @MethodSource("com.joehxblog.tictactoe.logic.TestHelper#positions")
     void playPosition(final int x, final int y) {
         assertFalse(this.board.getPosition(x,y));
 

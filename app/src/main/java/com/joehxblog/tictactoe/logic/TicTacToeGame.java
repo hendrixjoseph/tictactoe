@@ -7,7 +7,7 @@ public class TicTacToeGame {
     private boolean xTurn = true; // o's turn when xTurn = false
 
     public boolean canPlayPosition(final int x, final int y) {
-        return this.xBoard.getPosition(x,y) && this.oBoard.getPosition(x,y);
+        return !(this.xBoard.getPosition(x,y) || this.oBoard.getPosition(x,y));
     }
 
     public boolean hasWinner() {

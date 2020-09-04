@@ -1,8 +1,10 @@
-package com.joehxblog.tictactoe;
+package com.joehxblog.tictactoe.android;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.joehxblog.tictactoe.R;
 
 public class MainActivity extends AppCompatActivity {
 
