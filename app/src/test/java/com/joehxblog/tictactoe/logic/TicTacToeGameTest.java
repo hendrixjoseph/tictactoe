@@ -18,7 +18,10 @@ class TicTacToeGameTest {
         return Stream.of(// x     y
                 createPlays(0,0,  0,1,
                             1,0,  0,2,
-                            2,0)
+                            2,0),
+                createPlays(0,1,  0,0,
+                            1,1,  1,0,
+                            2,1)
         );
     }
 

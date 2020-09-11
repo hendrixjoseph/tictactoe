@@ -18,7 +18,8 @@ class TicTacToeBitBoardTest {
     TicTacToeBitBoard board;
 
     static Stream<List<int[]>> winningPlays() {
-        return Stream.of(createPlays(0,0, 0,1, 0,2));
+        return Stream.of(createPlays(0,0, 0,1, 0,2),
+                         createPlays(0,0, 1,0, 2,0));
     }
 
     static Stream<List<int[]>> losingPlays() {

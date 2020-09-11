@@ -10,6 +10,16 @@ public class TicTacToeGame {
         return !(this.xBoard.getPosition(x,y) || this.oBoard.getPosition(x,y));
     }
 
+    public char getValue(final int x, final int y) {
+        if (this.xBoard.getPosition(x,y)) {
+            return 'x';
+        } else if (this.oBoard.getPosition(x,y)) {
+            return 'o';
+        } else {
+            return ' ';
+        }
+    }
+
     public boolean hasWinner() {
         return this.xBoard.hasWon() || this.oBoard.hasWon();
     }
@@ -27,4 +37,9 @@ public class TicTacToeGame {
         }
     }
 
+    public void reset() {
+        this.xBoard.reset();
+        this.oBoard.reset();
+        xTurn = true;
+    }
 }
