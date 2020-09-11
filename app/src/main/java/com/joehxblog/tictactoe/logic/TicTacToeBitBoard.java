@@ -9,7 +9,7 @@ public class TicTacToeBitBoard {
     private final BitSet board = new BitSet();
 
     private int convert(final int x, final int y) {
-        return x + y * 3;
+        return x + y * BOARD_SIZE;
     }
 
     public boolean getPosition(final int x, final int y) {
@@ -24,11 +24,17 @@ public class TicTacToeBitBoard {
         this.board.clear();
     }
 
+    public BitSet getPlayed() {
+        BitSet played = new BitSet();
+        played.or(board);
+        return played;
+    }
+
     public boolean hasWon() {
                // horizontals
-        return this.board.get(0, 3).cardinality() == 3
-            || this.board.get(3, 6).cardinality() == 3
-            || this.board.get(6, 9).cardinality() == 3
+        return this.board.get(0, 3).cardinality() == BOARD_SIZE
+            || this.board.get(3, 6).cardinality() == BOARD_SIZE
+            || this.board.get(6, 9).cardinality() == BOARD_SIZE
                // verticals
             || this.board.get(0) && this.board.get(3) && this.board.get(6)
             || this.board.get(1) && this.board.get(4) && this.board.get(7)
@@ -36,19 +42,5 @@ public class TicTacToeBitBoard {
                // diagonals
             || this.board.get(0) && this.board.get(4) && this.board.get(8)
             || this.board.get(2) && this.board.get(4) && this.board.get(6);
-        /*
-        // horizontals
-        return (this.board[0][0] && this.board[0][1] && this.board[0][2])
-            || (this.board[1][0] && this.board[1][1] && this.board[1][2])
-            || (this.board[2][0] && this.board[2][1] && this.board[2][2])
-               // verticals
-            || (this.board[0][0] && this.board[1][0] && this.board[2][0])
-            || (this.board[0][1] && this.board[1][1] && this.board[2][1])
-            || (this.board[0][2] && this.board[1][2] && this.board[2][2])
-               // diagonals
-            || (this.board[0][0] && this.board[1][1] && this.board[2][2])
-            || (this.board[0][2] && this.board[1][1] && this.board[2][0]);
-
-         */
     }
 }

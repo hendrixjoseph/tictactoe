@@ -1,6 +1,12 @@
 package com.joehxblog.tictactoe.logic;
 
+import java.util.BitSet;
+
 public class TicTacToeGame {
+    private static final char X = 'x';
+    private static final char O = 'o';
+    private static final char EMPTY = ' ';
+
     private final TicTacToeBitBoard xBoard = new TicTacToeBitBoard();
     private final TicTacToeBitBoard oBoard = new TicTacToeBitBoard();
 
@@ -12,16 +18,30 @@ public class TicTacToeGame {
 
     public char getValue(final int x, final int y) {
         if (this.xBoard.getPosition(x,y)) {
-            return 'x';
+            return X;
         } else if (this.oBoard.getPosition(x,y)) {
-            return 'o';
+            return O;
         } else {
-            return ' ';
+            return EMPTY;
+        }
+    }
+
+    public char getWinner() {
+        if (this.xBoard.hasWon()) {
+            return X;
+        } else if (this.oBoard.hasWon()) {
+            return O;
+        } else {
+            return EMPTY;
         }
     }
 
     public boolean hasWinner() {
         return this.xBoard.hasWon() || this.oBoard.hasWon();
+    }
+
+    public void playPosition(final int i) {
+        playPosition(i % 3, i / 3);
     }
 
     public void playPosition(final int x, final int y) {
@@ -40,6 +60,13 @@ public class TicTacToeGame {
     public void reset() {
         this.xBoard.reset();
         this.oBoard.reset();
-        xTurn = true;
+        this.xTurn = true;
+    }
+
+    public BitSet getPlayed() {
+        final BitSet played = new BitSet();
+        played.or(this.xBoard.getPlayed());
+        played.or(this.oBoard.getPlayed());
+        return played;
     }
 }
