@@ -40,6 +40,10 @@ public class TicTacToeGame {
         return this.xBoard.hasWon() || this.oBoard.hasWon();
     }
 
+    public boolean isStalemate() {
+        return !hasWinner() && getPlayed().cardinality() == 9;
+    }
+
     public void playPosition(final int i) {
         playPosition(i % 3, i / 3);
     }

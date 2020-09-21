@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        app:title="Title 1"
-        app:key="amazon-affiliate-tags">
-    </PreferenceCategory>
+        app:title="Difficulty"
+        app:key="tictactoe-difficulty">
 
-    <PreferenceCategory
-        app:title="Title 2"
-        app:key="sharing-history">
-
+        <CheckBoxPreference
+            app:title="Easy"
+            app:key="tictactoe-easy-difficulty"
+            app:widgetLayout="@layout/radiobox"/>
+        <CheckBoxPreference
+            app:title="Medium"
+            app:key="tictactoe-medium-difficulty"
+            app:widgetLayout="@layout/radiobox" />
+        <CheckBoxPreference
+            app:title="Hard"
+            app:key="tictactoe-hard-difficulty"
+            app:widgetLayout="@layout/radiobox" />
     </PreferenceCategory>
 
 </PreferenceScreen>

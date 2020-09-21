@@ -1,10 +1,12 @@
 package com.joehxblog.tictactoe.android;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.gridlayout.widget.GridLayout;
 
 import com.joehxblog.tictactoe.R;
@@ -15,14 +17,17 @@ import java.util.Arrays;
 
 public class TicTacToeActivity extends AppCompatActivity {
 
-    final Button[][] buttons = new Button[3][3];
-    final TicTacToeGame game = new TicTacToeGame();
+    private final Button[][] buttons = new Button[3][3];
+    private final TicTacToeGame game = new TicTacToeGame();
+    private final TicTacToeAI ai = new TicTacToeAI(this.game);
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tictactoe);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
 
+        setSupportActionBar(myToolbar);
         setupPlayButtons();
         setupNewGameButton();
     }
@@ -31,28 +36,53 @@ public class TicTacToeActivity extends AppCompatActivity {
         final GridLayout layout = findViewById(R.id.gridLayout);
         final int count = layout.getChildCount();
 
-        final TicTacToeAI ai = new TicTacToeAI(this.game);
-
         for (int i = 0; i < count; i++) {
             final int x = i % 3;
             final int y = i / 3;
             this.buttons[x][y] = (Button) layout.getChildAt(i);
 
-            this.buttons[x][y].setOnClickListener(v -> {
-                this.game.playPosition(x, y);
+            this.buttons[x][y].setOnClickListener(v -> clickPlayButton(x,y));
+        }
+    }
 
-                if (this.game.hasWinner()) {
-                    setWinnerText();
-                } else {
-                    ai.playRandomPosition();
+    private void clickPlayButton(int x, int y) {
+        this.buttons[x][y].setClickable(false);
+        this.game.playPosition(x, y);
 
-                    if (this.game.hasWinner()) {
-                        setWinnerText();
-                    }
+        if (this.game.hasWinner()) {
+            setWinnerText();
+        } else if (this.game.isStalemate()) {
+            setStalemateText();
+        } else {
+            int position = ai.playRandomPosition();
+            this.buttons[position % 3][position / 3].setClickable(false);
+
+            if (this.game.hasWinner()) {
+                setWinnerText();
+            // reasonably, stalemate can only occur on odd
+            // plays, so this else if condition should never be true
+            } else if (this.game.isStalemate()) {
+                setStalemateText();
+            }
+        }
+
+        setButtonTexts();
+    }
+
+    private void think() {
+        Button prevButton = null;
+
+        for (Button[] buttons : this.buttons) {
+            for (Button button : buttons) {
+                if (prevButton != null) {
+                    prevButton.setText("");
                 }
 
-                setButtonTexts();
-            });
+                if (TextUtils.isEmpty(button.getText())) {
+                    button.setText("?");
+                    prevButton = button;
+                }
+            }
         }
     }
 
@@ -60,7 +90,10 @@ public class TicTacToeActivity extends AppCompatActivity {
         final Button newGameButton = findViewById(R.id.newGameButton);
         newGameButton.setOnClickListener(v -> {
             this.game.reset();
-            Arrays.stream(this.buttons).flatMap(Arrays::stream).forEach(b -> b.setText(""));
+            Arrays.stream(this.buttons).flatMap(Arrays::stream).forEach(b -> {
+                    b.setText("");
+                    b.setClickable(true);
+            });
             final TextView text = findViewById(R.id.winnerTextView);
             text.setText("");
         });
@@ -69,6 +102,11 @@ public class TicTacToeActivity extends AppCompatActivity {
     private void setWinnerText() {
         final TextView text = findViewById(R.id.winnerTextView);
         text.setText(this.game.getWinner() + " has won!");
+    }
+
+    private void setStalemateText() {
+        final TextView text = findViewById(R.id.winnerTextView);
+        text.setText("It's a tie!");
     }
 
     private void setButtonTexts() {

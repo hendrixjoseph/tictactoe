@@ -2,8 +2,12 @@ package com.joehxblog.tictactoe.logic;
 
 import java.util.BitSet;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class TicTacToeAI {
@@ -12,6 +16,10 @@ public class TicTacToeAI {
 
     public TicTacToeAI(final TicTacToeGame game) {
         this.game = Objects.requireNonNull(game);
+    }
+
+    public int playToWin() {
+        return playRandomPosition();
     }
 
     public int playRandomPosition() {
