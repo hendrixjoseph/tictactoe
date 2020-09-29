@@ -12,10 +12,30 @@ import java.util.stream.Collectors;
 
 public class TicTacToeAI {
 
+    public enum Difficulty {EASY, MEDIUM, HARD}
+
     private final TicTacToeGame game;
+    private Difficulty difficulty = Difficulty.EASY;
 
     public TicTacToeAI(final TicTacToeGame game) {
         this.game = Objects.requireNonNull(game);
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public int play() {
+        switch (difficulty) {
+            case EASY:
+                return playFirstAvailablePosition();
+            case MEDIUM:
+                return  playRandomPosition();
+            case HARD:
+                return playToWin();
+        }
+
+        throw new AssertionError("Difficulty " + difficulty + " not expressed in switch statement.");
     }
 
     public int playToWin() {

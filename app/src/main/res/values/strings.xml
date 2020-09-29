@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Tic Tac Toe</string>
+    <string name="new_game">New Game</string>
+    <string name="stalemate_text">It\'s a tie!</string>
+    <string name="winner_text_template">%c has won!</string>
+
+    <!-- difficulties -->
+    <string name="easy_difficulty">Easy</string>
+    <string name="medium_difficulty">Medium</string>
+    <string name="hard_difficulty">Hard</string>
 </resources>

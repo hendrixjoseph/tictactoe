@@ -2,16 +2,20 @@ package com.joehxblog.tictactoe.android;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.gridlayout.widget.GridLayout;
 
 import com.joehxblog.tictactoe.R;
 import com.joehxblog.tictactoe.logic.TicTacToeAI;
 import com.joehxblog.tictactoe.logic.TicTacToeGame;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
@@ -25,11 +29,41 @@ public class TicTacToeActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tictactoe);
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
 
-        setSupportActionBar(myToolbar);
         setupPlayButtons();
-        setupNewGameButton();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.tictactoe_menu, menu);
+        return true;
+    }
+
+    public void newGame(MenuItem item) {
+        this.game.reset();
+        Arrays.stream(this.buttons).flatMap(Arrays::stream).forEach(b -> {
+            b.setText("");
+            b.setClickable(true);
+        });
+        final TextView text = findViewById(R.id.winnerTextView);
+        text.setText("");
+    }
+
+    public void setDifficulty(@NotNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.easy_difficulty:
+                ai.setDifficulty(TicTacToeAI.Difficulty.EASY);
+                break;
+            case R.id.medium_difficulty:
+                ai.setDifficulty(TicTacToeAI.Difficulty.MEDIUM);
+                break;
+            case R.id.hard_difficulty:
+                ai.setDifficulty(TicTacToeAI.Difficulty.HARD);
+                break;
+        }
+
+        item.setChecked(true);
     }
 
     private void setupPlayButtons() {
@@ -54,7 +88,7 @@ public class TicTacToeActivity extends AppCompatActivity {
         } else if (this.game.isStalemate()) {
             setStalemateText();
         } else {
-            int position = ai.playRandomPosition();
+            int position = ai.play();
             this.buttons[position % 3][position / 3].setClickable(false);
 
             if (this.game.hasWinner()) {
@@ -86,27 +120,16 @@ public class TicTacToeActivity extends AppCompatActivity {
         }
     }
 
-    private void setupNewGameButton() {
-        final Button newGameButton = findViewById(R.id.newGameButton);
-        newGameButton.setOnClickListener(v -> {
-            this.game.reset();
-            Arrays.stream(this.buttons).flatMap(Arrays::stream).forEach(b -> {
-                    b.setText("");
-                    b.setClickable(true);
-            });
-            final TextView text = findViewById(R.id.winnerTextView);
-            text.setText("");
-        });
-    }
-
     private void setWinnerText() {
         final TextView text = findViewById(R.id.winnerTextView);
-        text.setText(this.game.getWinner() + " has won!");
+        String winnerTextTemplate = this.getText(R.string.winner_text_template).toString();
+        String winnerText = String.format(winnerTextTemplate, this.game.getWinner());
+        text.setText(winnerText);
     }
 
     private void setStalemateText() {
         final TextView text = findViewById(R.id.winnerTextView);
-        text.setText("It's a tie!");
+        text.setText(R.string.stalemate_text);
     }
 
     private void setButtonTexts() {
