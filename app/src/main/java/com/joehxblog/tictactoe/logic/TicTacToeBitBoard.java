@@ -5,7 +5,6 @@ import java.util.BitSet;
 public class TicTacToeBitBoard {
     private static final int BOARD_SIZE = 3;
 
-    //private final boolean[][] board = new boolean[BOARD_SIZE][BOARD_SIZE];
     private final BitSet board = new BitSet();
 
     private int convert(final int x, final int y) {

@@ -73,4 +73,12 @@ public class TicTacToeGame {
         played.or(this.oBoard.getPlayed());
         return played;
     }
+
+    public BitSet getXPlayed() {
+        return this.xBoard.getPlayed();
+    }
+
+    public BitSet getOPlayed() {
+        return this.oBoard.getPlayed();
+    }
 }

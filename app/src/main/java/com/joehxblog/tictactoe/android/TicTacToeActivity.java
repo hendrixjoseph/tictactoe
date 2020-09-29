@@ -1,5 +1,6 @@
 package com.joehxblog.tictactoe.android;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -10,16 +11,21 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.gridlayout.widget.GridLayout;
+import androidx.preference.PreferenceManager;
 
 import com.joehxblog.tictactoe.R;
 import com.joehxblog.tictactoe.logic.TicTacToeAI;
 import com.joehxblog.tictactoe.logic.TicTacToeGame;
+
+import static com.joehxblog.tictactoe.logic.TicTacToeAI.Difficulty;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
 public class TicTacToeActivity extends AppCompatActivity {
+
+    private static final String DIFFICULTY = "DIFFICULTY";
 
     private final Button[][] buttons = new Button[3][3];
     private final TicTacToeGame game = new TicTacToeGame();
@@ -37,6 +43,15 @@ public class TicTacToeActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.tictactoe_menu, menu);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String difficultyString = sharedPreferences.getString(DIFFICULTY, Difficulty.EASY.toString());
+        Difficulty difficulty = Difficulty.valueOf(difficultyString);
+
+        ai.setDifficulty(difficulty);
+
+        menu.findItem(difficulty.getMenuId()).setChecked(true);
+
         return true;
     }
 
@@ -51,17 +66,11 @@ public class TicTacToeActivity extends AppCompatActivity {
     }
 
     public void setDifficulty(@NotNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.easy_difficulty:
-                ai.setDifficulty(TicTacToeAI.Difficulty.EASY);
-                break;
-            case R.id.medium_difficulty:
-                ai.setDifficulty(TicTacToeAI.Difficulty.MEDIUM);
-                break;
-            case R.id.hard_difficulty:
-                ai.setDifficulty(TicTacToeAI.Difficulty.HARD);
-                break;
-        }
+        Difficulty difficulty = Difficulty.getByMenuId(item.getItemId());
+        ai.setDifficulty(difficulty);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.edit().putString(DIFFICULTY, difficulty.toString()).apply();
 
         item.setChecked(true);
     }
