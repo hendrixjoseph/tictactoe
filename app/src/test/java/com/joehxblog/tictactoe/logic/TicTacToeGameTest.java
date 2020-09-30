@@ -69,4 +69,22 @@ class TicTacToeGameTest {
             System.out.println();
         }
     }
+
+    @ParameterizedTest
+    @MethodSource({"plays"})
+    void testRestoreFromHash(final List<int[]> plays) {
+        TicTacToeGame otherGame = new TicTacToeGame();
+
+        plays.forEach(play -> {
+            otherGame.restoreFromHash(this.game.hashCode());
+
+            assertEquals(this.game, otherGame);
+
+            this.game.playPosition(play[0], play[1]);
+        });
+
+        otherGame.restoreFromHash(this.game.hashCode());
+
+        assertEquals(this.game, otherGame);
+    }
 }

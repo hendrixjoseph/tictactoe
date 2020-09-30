@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static com.joehxblog.tictactoe.logic.TestHelper.createPlays;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -75,5 +76,23 @@ class TicTacToeBitBoardTest {
         plays.forEach(play -> this.board.playPosition(play[0], play[1]));
 
         assertFalse(this.board.hasWon());
+    }
+
+    @ParameterizedTest
+    @MethodSource({"winningPlays", "losingPlays"})
+    void testRestoreFromHash(final List<int[]> plays) {
+        TicTacToeBitBoard otherBoard = new TicTacToeBitBoard();
+
+        plays.forEach(play -> {
+            otherBoard.restoreFromHash(this.board.hashCode());
+
+            assertEquals(this.board, otherBoard);
+
+            this.board.playPosition(play[0], play[1]);
+        });
+
+        otherBoard.restoreFromHash(this.board.hashCode());
+
+        assertEquals(this.board, otherBoard);
     }
 }

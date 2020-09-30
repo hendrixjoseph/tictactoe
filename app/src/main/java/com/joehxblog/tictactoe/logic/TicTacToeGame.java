@@ -1,7 +1,6 @@
 package com.joehxblog.tictactoe.logic;
 
 import java.util.BitSet;
-import java.util.Objects;
 import java.util.StringJoiner;
 
 public class TicTacToeGame {
@@ -69,6 +68,13 @@ public class TicTacToeGame {
         this.xTurn = true;
     }
 
+    public void restoreFromHash(final int hash) {
+        this.oBoard.restoreFromHash(hash % 512); // 512 is 2^9
+        this.xBoard.restoreFromHash(hash >> 9);
+
+        this.xTurn = this.xBoard.getPlayed().cardinality() == this.oBoard.getPlayed().cardinality();
+    }
+
     public BitSet getPlayed() {
         final BitSet played = new BitSet();
         played.or(this.xBoard.getPlayed());
@@ -78,17 +84,7 @@ public class TicTacToeGame {
 
     @Override
     public int hashCode() {
-        return (hashCode(this.xBoard.getPlayed()) << 9) + hashCode(this.oBoard.getPlayed());
-    }
-
-    private int hashCode(BitSet bitSet) {
-        int hash = 0;
-
-        for (int i = 0; i < 9; i++) {
-            hash = (hash << 1) + (bitSet.get(i) ? 1 : 0);
-        }
-
-        return hash;
+        return (this.xBoard.hashCode() << 9) + this.oBoard.hashCode();
     }
 
     @Override
@@ -97,11 +93,14 @@ public class TicTacToeGame {
             return false;
         }
 
-        return this.xBoard.getPlayed().equals(this.oBoard.getPlayed());
+        TicTacToeGame g = (TicTacToeGame) o;
+
+        return this.xBoard.equals(g.xBoard) && this.oBoard.equals(g.oBoard) && this.xTurn == g.xTurn;
     }
 
+    @Override
     public String toString() {
-        StringJoiner rows = new StringJoiner(System.lineSeparator());
+        final StringJoiner rows = new StringJoiner(System.lineSeparator());
         rows.add(Integer.toString(this.hashCode()));
         StringJoiner column = new StringJoiner("][","[","]");
 

@@ -24,8 +24,8 @@ public class TicTacToeBitBoard {
     }
 
     public BitSet getPlayed() {
-        BitSet played = new BitSet();
-        played.or(board);
+        final BitSet played = new BitSet();
+        played.or(this.board);
         return played;
     }
 
@@ -41,5 +41,41 @@ public class TicTacToeBitBoard {
                // diagonals
             || this.board.get(0) && this.board.get(4) && this.board.get(8)
             || this.board.get(2) && this.board.get(4) && this.board.get(6);
+    }
+
+    public void restoreFromHash(final int hash) {
+        this.board.clear();
+
+        int tempHash = hash;
+
+        for (int i = 8; i >= 0 ; i--) {
+            if (tempHash % 2 == 1) {
+                this.board.set(i);
+            }
+
+            tempHash = tempHash >> 1;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+
+        for (int i = 0; i < 9; i++) {
+            hash = (hash << 1) + (this.board.get(i) ? 1 : 0);
+        }
+
+        return hash;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof TicTacToeBitBoard)) {
+            return false;
+        }
+
+        final TicTacToeBitBoard g = (TicTacToeBitBoard) o;
+
+        return this.board.equals(g.board);
     }
 }

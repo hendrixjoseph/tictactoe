@@ -17,11 +17,11 @@ import com.joehxblog.tictactoe.R;
 import com.joehxblog.tictactoe.logic.TicTacToeAI;
 import com.joehxblog.tictactoe.logic.TicTacToeGame;
 
-import static com.joehxblog.tictactoe.logic.TicTacToeAI.Difficulty;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+
+import static com.joehxblog.tictactoe.logic.TicTacToeAI.Difficulty;
 
 public class TicTacToeActivity extends AppCompatActivity {
 
@@ -40,22 +40,28 @@ public class TicTacToeActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
+    protected void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.tictactoe_menu, menu);
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String difficultyString = sharedPreferences.getString(DIFFICULTY, Difficulty.EASY.toString());
-        Difficulty difficulty = Difficulty.valueOf(difficultyString);
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final String difficultyString = sharedPreferences.getString(DIFFICULTY, Difficulty.EASY.toString());
+        final Difficulty difficulty = Difficulty.valueOf(difficultyString);
 
-        ai.setDifficulty(difficulty);
+        this.ai.setDifficulty(difficulty);
 
         menu.findItem(difficulty.getMenuId()).setChecked(true);
 
         return true;
     }
 
-    public void newGame(MenuItem item) {
+    public void newGame(final MenuItem item) {
         this.game.reset();
         Arrays.stream(this.buttons).flatMap(Arrays::stream).forEach(b -> {
             b.setText("");
@@ -65,11 +71,11 @@ public class TicTacToeActivity extends AppCompatActivity {
         text.setText("");
     }
 
-    public void setDifficulty(@NotNull MenuItem item) {
-        Difficulty difficulty = Difficulty.getByMenuId(item.getItemId());
-        ai.setDifficulty(difficulty);
+    public void setDifficulty(@NotNull final MenuItem item) {
+        final Difficulty difficulty = Difficulty.getByMenuId(item.getItemId());
+        this.ai.setDifficulty(difficulty);
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferences.edit().putString(DIFFICULTY, difficulty.toString()).apply();
 
         item.setChecked(true);
@@ -88,7 +94,7 @@ public class TicTacToeActivity extends AppCompatActivity {
         }
     }
 
-    private void clickPlayButton(int x, int y) {
+    private void clickPlayButton(final int x, final int y) {
         this.buttons[x][y].setClickable(false);
         this.game.playPosition(x, y);
 
@@ -97,7 +103,7 @@ public class TicTacToeActivity extends AppCompatActivity {
         } else if (this.game.isStalemate()) {
             setStalemateText();
         } else {
-            int position = ai.play();
+            final int position = this.ai.play();
             this.buttons[position % 3][position / 3].setClickable(false);
 
             if (this.game.hasWinner()) {
@@ -115,8 +121,8 @@ public class TicTacToeActivity extends AppCompatActivity {
     private void think() {
         Button prevButton = null;
 
-        for (Button[] buttons : this.buttons) {
-            for (Button button : buttons) {
+        for (final Button[] buttons : this.buttons) {
+            for (final Button button : buttons) {
                 if (prevButton != null) {
                     prevButton.setText("");
                 }
@@ -131,8 +137,8 @@ public class TicTacToeActivity extends AppCompatActivity {
 
     private void setWinnerText() {
         final TextView text = findViewById(R.id.winnerTextView);
-        String winnerTextTemplate = this.getText(R.string.winner_text_template).toString();
-        String winnerText = String.format(winnerTextTemplate, this.game.getWinner());
+        final String winnerTextTemplate = this.getText(R.string.winner_text_template).toString();
+        final String winnerText = String.format(winnerTextTemplate, this.game.getWinner());
         text.setText(winnerText);
     }
 
