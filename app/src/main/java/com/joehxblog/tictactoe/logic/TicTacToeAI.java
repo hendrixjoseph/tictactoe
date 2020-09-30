@@ -46,7 +46,7 @@ public class TicTacToeAI {
     private final Map<Integer, Map<Integer, Integer>> winMap;
 
     public TicTacToeAI(final TicTacToeGame game) {
-        this(game, Collections.emptyMap());
+        this(game, WinMapBuilder.WIN_MAP);
     }
 
     public TicTacToeAI(TicTacToeGame game, Map<Integer, Map<Integer, Integer>> winMap) {

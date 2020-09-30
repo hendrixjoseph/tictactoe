@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.StringJoiner;
 import java.util.function.BiFunction;
 
 class TicTacToeAITrainer {
@@ -70,6 +71,27 @@ class TicTacToeAITrainer {
                 add(currentOMap, -1);
             }
         }
+
+        out.close();
+
+        StringJoiner outer = new StringJoiner(",","{","}");
+
+        winMap.forEach((hash, map) -> {
+            StringJoiner inner = new StringJoiner(",","{","}");
+            inner.add(Integer.toString(hash));
+
+            map.forEach((k,v) -> {
+                inner.add(Integer.toString(k));
+                inner.add(Integer.toString(v));
+            });
+
+            outer.add(inner.toString());
+        });
+
+        PrintStream winMapOut = new PrintStream("winMap.txt");
+        winMapOut.print(outer.toString());
+
+        winMapOut.close();
     }
 
     private void add(Map<Integer, Integer> map, int value) {
