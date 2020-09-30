@@ -4,7 +4,10 @@ import com.joehxblog.tictactoe.R;
 
 import java.util.BitSet;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -40,9 +43,15 @@ public class TicTacToeAI {
 
     private final TicTacToeGame game;
     private Difficulty difficulty = Difficulty.EASY;
+    private final Map<Integer, Map<Integer, Integer>> winMap;
 
     public TicTacToeAI(final TicTacToeGame game) {
+        this(game, Collections.emptyMap());
+    }
+
+    public TicTacToeAI(TicTacToeGame game, Map<Integer, Map<Integer, Integer>> winMap) {
         this.game = Objects.requireNonNull(game);
+        this.winMap = Objects.requireNonNull(winMap);
     }
 
     public void setDifficulty(final Difficulty difficulty) {
@@ -54,7 +63,7 @@ public class TicTacToeAI {
             case EASY:
                 return playFirstAvailablePosition();
             case MEDIUM:
-                return  playRandomPosition();
+                return playRandomPosition();
             case HARD:
                 return playToWin();
         }
@@ -63,7 +72,27 @@ public class TicTacToeAI {
     }
 
     public int playToWin() {
-        return playRandomPosition();
+        int board = this.game.hashCode();
+
+        if (this.winMap.containsKey(board)) {
+            Map<Integer, Integer> currentMap = this.winMap.get(board);
+
+            Map.Entry<Integer, Integer> maxEntry =
+                        this.winMap.get(board)
+                       .entrySet()
+                       .stream()
+                       .max(Comparator.comparingInt(Map.Entry::getValue))
+                       .get();
+
+            if (maxEntry.getValue() < 0 && currentMap.size() < 9 - this.game.getPlayed().cardinality()) {
+                return playRandomPosition();
+            } else {
+                this.game.playPosition(maxEntry.getKey());
+                return maxEntry.getKey();
+            }
+        } else {
+            return playRandomPosition();
+        }
     }
 
     public int playRandomPosition() {
@@ -83,35 +112,5 @@ public class TicTacToeAI {
         final int position = this.game.getPlayed().nextClearBit(0);
         this.game.playPosition(position);
         return position;
-    }
-
-    public static class Memory {
-        private final BitSet xBoard;
-        private final BitSet yBoard;
-        private final int position;
-
-        public Memory(final BitSet xBoard, final BitSet yBoard, final int position) {
-            this.xBoard = xBoard;
-            this.yBoard = yBoard;
-            this.position = position;
-        }
-
-        @Override
-        public int hashCode() {
-            return 0;
-        }
-
-        @Override
-        public boolean equals(final Object o) {
-            if (!(o instanceof Memory)) {
-                return false;
-            }
-
-            final Memory m = (Memory) o;
-
-            return m.position == this.position
-                    && m.xBoard.equals(this.xBoard)
-                    && m.yBoard.equals(this.yBoard);
-        }
     }
 }

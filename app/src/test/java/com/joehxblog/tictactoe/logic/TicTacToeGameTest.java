@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static com.joehxblog.tictactoe.logic.TestHelper.createPlays;
@@ -50,5 +52,21 @@ class TicTacToeGameTest {
         }
 
         assertTrue(game.hasWinner());
+    }
+
+    @ParameterizedTest
+    @MethodSource("plays")
+    void hashCodeTest(final List<int[]> plays) {
+        Set<Integer> hashSet = new HashSet<>();
+        hashSet.add(game.hashCode());
+
+        for (int[] play : plays) {
+            game.playPosition(play[0], play[1]);
+            assertFalse(hashSet.contains(game.hashCode()));
+            hashSet.add(game.hashCode());
+
+            System.out.println(game);
+            System.out.println();
+        }
     }
 }

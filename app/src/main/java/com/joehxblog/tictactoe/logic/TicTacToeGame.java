@@ -1,6 +1,8 @@
 package com.joehxblog.tictactoe.logic;
 
 import java.util.BitSet;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 public class TicTacToeGame {
     private static final char X = 'x';
@@ -74,11 +76,51 @@ public class TicTacToeGame {
         return played;
     }
 
-    public BitSet getXPlayed() {
-        return this.xBoard.getPlayed();
+    @Override
+    public int hashCode() {
+        return (hashCode(this.xBoard.getPlayed()) << 9) + hashCode(this.oBoard.getPlayed());
     }
 
-    public BitSet getOPlayed() {
-        return this.oBoard.getPlayed();
+    private int hashCode(BitSet bitSet) {
+        int hash = 0;
+
+        for (int i = 0; i < 9; i++) {
+            hash = (hash << 1) + (bitSet.get(i) ? 1 : 0);
+        }
+
+        return hash;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof TicTacToeGame)) {
+            return false;
+        }
+
+        return this.xBoard.getPlayed().equals(this.oBoard.getPlayed());
+    }
+
+    public String toString() {
+        StringJoiner rows = new StringJoiner(System.lineSeparator());
+        rows.add(Integer.toString(this.hashCode()));
+        StringJoiner column = new StringJoiner("][","[","]");
+
+        for (int i = 0; i < 9; i++) {
+
+            if (this.xBoard.getPlayed().get(i)) {
+                column.add(Character.toString(X));
+            } else if (this.oBoard.getPlayed().get(i)) {
+                column.add(Character.toString(O));
+            } else {
+                column.add(Character.toString(EMPTY));
+            }
+
+            if (i % 3 == 2) {
+                rows.add(column.toString());
+                column = new StringJoiner("][","[","]");
+            }
+        }
+
+        return rows.toString();
     }
 }
