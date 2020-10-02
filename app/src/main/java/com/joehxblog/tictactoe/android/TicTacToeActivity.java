@@ -117,23 +117,24 @@ public class TicTacToeActivity extends AppCompatActivity {
         for (int i = 0; i < count; i++) {
             final int x = i % 3;
             final int y = i / 3;
-            this.buttons[x][y] = (Button) layout.getChildAt(i);
 
+            this.buttons[x][y] = (Button) layout.getChildAt(i);
             this.buttons[x][y].setOnClickListener(v -> clickPlayButton(x,y));
         }
     }
 
     private void clickPlayButton(final int x, final int y) {
-        this.buttons[x][y].setClickable(false);
         this.game.playPosition(x, y);
+        playButton(x, y);
 
         if (this.game.hasWinner()) {
             setWinnerText();
         } else if (this.game.isStalemate()) {
             setStalemateText();
         } else if (singlePlayer) {
+
             final int position = this.ai.play();
-            this.buttons[position % 3][position / 3].setClickable(false);
+            playButton( position % 3, position / 3);
 
             if (this.game.hasWinner()) {
                 setWinnerText();
@@ -153,7 +154,7 @@ public class TicTacToeActivity extends AppCompatActivity {
         for (final Button[] buttons : this.buttons) {
             for (final Button button : buttons) {
                 if (prevButton != null) {
-                    prevButton.setText("");
+                    //prevButton.setText("");
                 }
 
                 if (TextUtils.isEmpty(button.getText())) {
@@ -174,6 +175,11 @@ public class TicTacToeActivity extends AppCompatActivity {
     private void setStalemateText() {
         final TextView text = findViewById(R.id.winnerTextView);
         text.setText(R.string.stalemate_text);
+    }
+
+    private void playButton(int x, int y) {
+        this.buttons[x][y].setClickable(false);
+        this.buttons[x][y].setText(Character.toString(this.game.getValue(x, y)));
     }
 
     private void setButtonTexts() {
