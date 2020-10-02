@@ -3,4 +3,5 @@
     <dimen name="board_size">@dimen/_250sdp</dimen>
     <dimen name="button_size">@dimen/_75sdp</dimen>
     <dimen name="button_margin">@dimen/_4sdp</dimen>
+    <dimen name="button_text_size">@dimen/_40ssp</dimen>
 </resources>
