@@ -25,12 +25,13 @@ import static com.joehxblog.tictactoe.logic.TicTacToeAI.Difficulty;
 
 public class TicTacToeActivity extends AppCompatActivity {
 
-    private static final String DIFFICULTY = "DIFFICULTY";
-    private static final String GAMEHASH = "GAMEHASH";
+    private enum SETTINGS {SINGLE_PLAYER, DIFFICULTY, GAMEHASH};
 
     private final Button[][] buttons = new Button[3][3];
     private final TicTacToeGame game = new TicTacToeGame();
     private final TicTacToeAI ai = new TicTacToeAI(this.game);
+
+    private boolean singlePlayer = true;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class TicTacToeActivity extends AppCompatActivity {
         setupPlayButtons();
 
         if (savedInstanceState != null) {
-            final int gamehash = savedInstanceState.getInt(GAMEHASH);
+            final int gamehash = savedInstanceState.getInt(SETTINGS.GAMEHASH.toString());
 
             if (gamehash > 0) {
                 this.game.restoreFromHash(gamehash);
@@ -54,7 +55,7 @@ public class TicTacToeActivity extends AppCompatActivity {
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt(GAMEHASH, this.game.hashCode());
+        outState.putInt(SETTINGS.GAMEHASH.toString(), this.game.hashCode());
     }
 
     @Override
@@ -63,14 +64,22 @@ public class TicTacToeActivity extends AppCompatActivity {
         inflater.inflate(R.menu.tictactoe_menu, menu);
 
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        final String difficultyString = sharedPreferences.getString(DIFFICULTY, Difficulty.EASY.toString());
-        final Difficulty difficulty = Difficulty.valueOf(difficultyString);
-
-        this.ai.setDifficulty(difficulty);
-
-        menu.findItem(difficulty.getMenuId()).setChecked(true);
+        setDifficultyFromPreferences(sharedPreferences, menu);
+        setSinglePlayerFromPreferences(sharedPreferences, menu);
 
         return true;
+    }
+
+    private void setSinglePlayerFromPreferences(SharedPreferences sharedPreferences, Menu menu) {
+        this.singlePlayer = sharedPreferences.getBoolean(SETTINGS.SINGLE_PLAYER.toString(), true);
+        menu.findItem(R.id.single_player).setChecked(this.singlePlayer);
+    }
+
+    private void setDifficultyFromPreferences(SharedPreferences sharedPreferences, Menu menu) {
+        final String difficultyString = sharedPreferences.getString(SETTINGS.DIFFICULTY.toString(), Difficulty.EASY.toString());
+        final Difficulty difficulty = Difficulty.valueOf(difficultyString);
+        this.ai.setDifficulty(difficulty);
+        menu.findItem(difficulty.getMenuId()).setChecked(true);
     }
 
     public void newGame(final MenuItem item) {
@@ -88,9 +97,17 @@ public class TicTacToeActivity extends AppCompatActivity {
         this.ai.setDifficulty(difficulty);
 
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        sharedPreferences.edit().putString(DIFFICULTY, difficulty.toString()).apply();
+        sharedPreferences.edit().putString(SETTINGS.DIFFICULTY.toString(), difficulty.toString()).apply();
 
         item.setChecked(true);
+    }
+
+    public void toggleSinglePlayer(MenuItem item) {
+        this.singlePlayer = !this.singlePlayer;
+        item.setChecked(this.singlePlayer);
+
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.edit().putBoolean(SETTINGS.SINGLE_PLAYER.toString(), this.singlePlayer).apply();
     }
 
     private void setupPlayButtons() {
@@ -114,7 +131,7 @@ public class TicTacToeActivity extends AppCompatActivity {
             setWinnerText();
         } else if (this.game.isStalemate()) {
             setStalemateText();
-        } else {
+        } else if (singlePlayer) {
             final int position = this.ai.play();
             this.buttons[position % 3][position / 3].setClickable(false);
 

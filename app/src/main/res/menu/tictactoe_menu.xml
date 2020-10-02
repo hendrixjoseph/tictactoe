@@ -4,6 +4,10 @@
     <item android:title="@string/new_game"
          app:showAsAction="ifRoom"
          android:onClick="newGame"/>
+    <item android:title="@string/single_player"
+        android:id="@+id/single_player"
+        android:checkable="true"
+        android:onClick="toggleSinglePlayer" />
     <group android:checkableBehavior="single">
         <item android:title="@string/easy_difficulty"
             android:id="@+id/easy_difficulty"
