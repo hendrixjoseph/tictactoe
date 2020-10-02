@@ -93,7 +93,7 @@ public class TicTacToeGame {
             return false;
         }
 
-        TicTacToeGame g = (TicTacToeGame) o;
+        final TicTacToeGame g = (TicTacToeGame) o;
 
         return this.xBoard.equals(g.xBoard) && this.oBoard.equals(g.oBoard) && this.xTurn == g.xTurn;
     }

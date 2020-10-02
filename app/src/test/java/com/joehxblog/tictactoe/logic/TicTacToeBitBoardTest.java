@@ -81,7 +81,7 @@ class TicTacToeBitBoardTest {
     @ParameterizedTest
     @MethodSource({"winningPlays", "losingPlays"})
     void testRestoreFromHash(final List<int[]> plays) {
-        TicTacToeBitBoard otherBoard = new TicTacToeBitBoard();
+        final TicTacToeBitBoard otherBoard = new TicTacToeBitBoard();
 
         plays.forEach(play -> {
             otherBoard.restoreFromHash(this.board.hashCode());

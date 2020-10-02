@@ -26,6 +26,7 @@ import static com.joehxblog.tictactoe.logic.TicTacToeAI.Difficulty;
 public class TicTacToeActivity extends AppCompatActivity {
 
     private static final String DIFFICULTY = "DIFFICULTY";
+    private static final String GAMEHASH = "GAMEHASH";
 
     private final Button[][] buttons = new Button[3][3];
     private final TicTacToeGame game = new TicTacToeGame();
@@ -34,15 +35,26 @@ public class TicTacToeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_tictactoe);
 
         setupPlayButtons();
+
+        if (savedInstanceState != null) {
+            final int gamehash = savedInstanceState.getInt(GAMEHASH);
+
+            if (gamehash > 0) {
+                this.game.restoreFromHash(gamehash);
+                setButtonTexts();
+            }
+        }
     }
 
     @Override
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
 
+        outState.putInt(GAMEHASH, this.game.hashCode());
     }
 
     @Override

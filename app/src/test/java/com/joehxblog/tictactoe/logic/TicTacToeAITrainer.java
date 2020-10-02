@@ -2,19 +2,14 @@ package com.joehxblog.tictactoe.logic;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintStream;
-import java.io.Writer;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.StringJoiner;
-import java.util.function.BiFunction;
 
 class TicTacToeAITrainer {
     private final Map<Integer, Map<Integer, Integer>> winMap = new HashMap<>();
@@ -26,58 +21,58 @@ class TicTacToeAITrainer {
 
     @Test
     void train() throws IOException {
-        PrintStream out = new PrintStream("game.txt");
+        final PrintStream out = new PrintStream("game.txt");
 
-        Set<Integer> played = new HashSet<>();
+        final Set<Integer> played = new HashSet<>();
 
         for (int i = 0; i < 10; i++) {
             boolean xTurn = true;
             this.game.reset();
-            currentXMap.clear();
-            currentOMap.clear();
+            this.currentXMap.clear();
+            this.currentOMap.clear();
 
             out.println("Game " + i);
-            out.println(game);
+            out.println(this.game);
             out.println();
 
-            while (!game.hasWinner() && !game.isStalemate()) {
-                int board = game.hashCode();
+            while (!this.game.hasWinner() && !this.game.isStalemate()) {
+                final int board = this.game.hashCode();
 
-                int pos = ai.playToWin();
+                final int pos = this.ai.playToWin();
 
                 if (xTurn) {
-                    currentXMap.put(board, pos);
+                    this.currentXMap.put(board, pos);
                 } else {
-                    currentOMap.put(board, pos);
+                    this.currentOMap.put(board, pos);
                 }
 
                 played.add(board);
 
                 xTurn = !xTurn;
 
-                out.println(game);
+                out.println(this.game);
                 out.println();
                 out.flush();
             }
 
-            if (game.hasWinner() && game.getWinner() == 'x') {
-                add(currentXMap, 1);
-                add(currentOMap, -1);
-            } else if (game.hasWinner() && game.getWinner() == 'o') {
-                add(currentXMap, -1);
-                add(currentOMap, 1);
+            if (this.game.hasWinner() && this.game.getWinner() == 'x') {
+                add(this.currentXMap, 1);
+                add(this.currentOMap, -1);
+            } else if (this.game.hasWinner() && this.game.getWinner() == 'o') {
+                add(this.currentXMap, -1);
+                add(this.currentOMap, 1);
             } else {
-                add(currentXMap, -1);
-                add(currentOMap, -1);
+                add(this.currentXMap, -1);
+                add(this.currentOMap, -1);
             }
         }
 
         out.close();
 
-        StringJoiner outer = new StringJoiner(",","{","}");
+        final StringJoiner outer = new StringJoiner(",","{","}");
 
-        winMap.forEach((hash, map) -> {
-            StringJoiner inner = new StringJoiner(",","{","}");
+        this.winMap.forEach((hash, map) -> {
+            final StringJoiner inner = new StringJoiner(",","{","}");
             inner.add(Integer.toString(hash));
 
             map.forEach((k,v) -> {
@@ -88,15 +83,15 @@ class TicTacToeAITrainer {
             outer.add(inner.toString());
         });
 
-        PrintStream winMapOut = new PrintStream("winMap.txt");
+        final PrintStream winMapOut = new PrintStream("winMap.txt");
         winMapOut.print(outer.toString());
 
         winMapOut.close();
     }
 
-    private void add(Map<Integer, Integer> map, int value) {
+    private void add(final Map<Integer, Integer> map, final int value) {
         map.forEach((board, position) -> {
-            winMap.computeIfAbsent(board, k -> new HashMap<>()).merge(position, value, (o, i) -> i + value);
+            this.winMap.computeIfAbsent(board, k -> new HashMap<>()).merge(position, value, (o, i) -> i + value);
         });
     }
 }

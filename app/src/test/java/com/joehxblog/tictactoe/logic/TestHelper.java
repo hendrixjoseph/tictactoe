@@ -3,7 +3,6 @@ package com.joehxblog.tictactoe.logic;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 

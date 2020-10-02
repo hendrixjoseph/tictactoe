@@ -4,13 +4,14 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class WinMapBuilderTest {
 
     @Test
     void buildWinMap() {
-        Map<Integer, Map<Integer, Integer>> winMap = WinMapBuilder.buildWinMap();
+        final Map<Integer, Map<Integer, Integer>> winMap = WinMapBuilder.buildWinMap();
     }
 
     @Test

@@ -5,7 +5,6 @@ import com.joehxblog.tictactoe.R;
 import java.util.BitSet;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -18,7 +17,7 @@ public class TicTacToeAI {
 
         private final int menuId;
 
-        public static Difficulty getByMenuId(int menuId) {
+        public static Difficulty getByMenuId(final int menuId) {
             switch (menuId) {
                 case R.id.easy_difficulty:
                     return EASY;
@@ -49,7 +48,7 @@ public class TicTacToeAI {
         this(game, WinMapBuilder.WIN_MAP);
     }
 
-    public TicTacToeAI(TicTacToeGame game, Map<Integer, Map<Integer, Integer>> winMap) {
+    public TicTacToeAI(final TicTacToeGame game, final Map<Integer, Map<Integer, Integer>> winMap) {
         this.game = Objects.requireNonNull(game);
         this.winMap = Objects.requireNonNull(winMap);
     }
@@ -72,12 +71,12 @@ public class TicTacToeAI {
     }
 
     public int playToWin() {
-        int board = this.game.hashCode();
+        final int board = this.game.hashCode();
 
         if (this.winMap.containsKey(board)) {
-            Map<Integer, Integer> currentMap = this.winMap.get(board);
+            final Map<Integer, Integer> currentMap = this.winMap.get(board);
 
-            Map.Entry<Integer, Integer> maxEntry =
+            final Map.Entry<Integer, Integer> maxEntry =
                         this.winMap.get(board)
                        .entrySet()
                        .stream()

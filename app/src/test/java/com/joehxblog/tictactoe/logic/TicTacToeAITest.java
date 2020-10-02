@@ -3,7 +3,9 @@ package com.joehxblog.tictactoe.logic;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TicTacToeAITest {
 
@@ -11,12 +13,12 @@ class TicTacToeAITest {
 
     @BeforeEach
     void beforeEach() {
-        ai = new TicTacToeAI(new TicTacToeGame());
+        this.ai = new TicTacToeAI(new TicTacToeGame());
     }
 
     @Test
     void playRandomPosition() {
-        int position = ai.playRandomPosition();
+        final int position = this.ai.playRandomPosition();
         assertAll(() -> assertTrue(position >= 0),
                   () -> assertTrue(position < 9));
     }
@@ -24,7 +26,7 @@ class TicTacToeAITest {
     @Test
     void playFirstAvailablePosition() {
         for (int i = 0; i < 7; i++) { // only up to (less than) seven because at that point we have a winner
-            assertEquals(i, ai.playFirstAvailablePosition());
+            assertEquals(i, this.ai.playFirstAvailablePosition());
         }
     }
 

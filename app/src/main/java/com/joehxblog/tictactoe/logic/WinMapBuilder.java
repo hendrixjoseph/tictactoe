@@ -14,12 +14,12 @@ public class WinMapBuilder {
     public static final Map<Integer, Map<Integer, Integer>> WIN_MAP = Collections.unmodifiableMap(buildWinMap());
 
     public static Map<Integer, Map<Integer, Integer>> buildWinMap() {
-        Map<Integer, Map<Integer, Integer>> winMap = new HashMap<>();
+        final Map<Integer, Map<Integer, Integer>> winMap = new HashMap<>();
 
-        for (int[] datum : data) {
-            int hash = datum[0];
+        for (final int[] datum : data) {
+            final int hash = datum[0];
 
-            Map<Integer, Integer> playMap = new HashMap<>();
+            final Map<Integer, Integer> playMap = new HashMap<>();
 
             for (int i = 1; i < datum.length; i += 2) {
                 playMap.put(datum[i], datum[i + 1]);
