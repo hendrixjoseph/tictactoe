@@ -1,5 +1,8 @@
 package com.joehxblog.tictactoe.android;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -132,36 +135,33 @@ public class TicTacToeActivity extends AppCompatActivity {
         } else if (this.game.isStalemate()) {
             setStalemateText();
         } else if (singlePlayer) {
-
-            final int position = this.ai.play();
-            playButton( position % 3, position / 3);
-
-            if (this.game.hasWinner()) {
-                setWinnerText();
-            // reasonably, stalemate can only occur on odd
-            // plays, so this else if condition should never be true
-            } else if (this.game.isStalemate()) {
-                setStalemateText();
-            }
+            playAi();
         }
 
         setButtonTexts();
     }
 
-    private void think() {
-        Button prevButton = null;
+    private void playAi() {
+        final int position = this.ai.play();
+        int x = position % 3;
+        int y = position / 3;
 
-        for (final Button[] buttons : this.buttons) {
-            for (final Button button : buttons) {
-                if (prevButton != null) {
-                    //prevButton.setText("");
-                }
+        this.buttons[x][y].setAlpha(0.0f);
 
-                if (TextUtils.isEmpty(button.getText())) {
-                    button.setText("?");
-                    prevButton = button;
-                }
-            }
+        playButton(x, y);
+
+        this.buttons[x][y].animate()
+                .setDuration(1000)
+                .alpha(1.0f)
+                .rotationBy(360.0f)
+                .start();
+
+        if (this.game.hasWinner()) {
+            setWinnerText();
+            // reasonably, stalemate can only occur on odd
+            // plays, so this else if condition should never be true
+        } else if (this.game.isStalemate()) {
+            setStalemateText();
         }
     }
 
