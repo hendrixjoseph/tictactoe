@@ -34,6 +34,11 @@ public class TicTacToeAI {
             this.menuId = menuId;
         }
 
+        /**
+         * Gets the menu id associated with this difficulty.
+         *
+         * @return the menu id associated with this difficulty
+         */
         public int getMenuId() {
             return this.menuId;
         }
@@ -44,19 +49,42 @@ public class TicTacToeAI {
     private Difficulty difficulty = Difficulty.EASY;
     private final Map<Integer, Map<Integer, Integer>> winMap;
 
+    /**
+     * Creates a new TicTacToe AI with the default win map.
+     *
+     * @param game the tic tac toe game
+     *
+     * @see WinMapBuilder#WIN_MAP
+     */
     public TicTacToeAI(final TicTacToeGame game) {
         this(game, WinMapBuilder.WIN_MAP);
     }
 
+    /**
+     * Creates a new TicTacToe AI with a provided win map. Useful for training.
+     *
+     * @param game the tic tac toe game
+     * @param winMap a win map, which is a map of integers to a map of integers to an integer
+     */
     public TicTacToeAI(final TicTacToeGame game, final Map<Integer, Map<Integer, Integer>> winMap) {
         this.game = Objects.requireNonNull(game);
         this.winMap = Objects.requireNonNull(winMap);
     }
 
+    /**
+     * Sets the difficulty.
+     *
+     * @param difficulty the difficulty
+     */
     public void setDifficulty(final Difficulty difficulty) {
         this.difficulty = difficulty;
     }
 
+    /**
+     * Plays this AI's turn based on the set difficulty.
+     *
+     * @return the position the AI played
+     */
     public int play() {
         switch (this.difficulty) {
             case EASY:
@@ -70,6 +98,11 @@ public class TicTacToeAI {
         throw new AssertionError("Difficulty " + this.difficulty + " not expressed in switch statement.");
     }
 
+    /**
+     * Plays this AI's turn as smartly as it can.
+     *
+     * @return the position the AI played
+     */
     public int playToWin() {
         final int board = this.game.hashCode();
 
@@ -94,6 +127,11 @@ public class TicTacToeAI {
         }
     }
 
+    /**
+     * Plays this AI's turn as a random position.
+     *
+     * @return the position the AI played
+     */
     public int playRandomPosition() {
 
         final BitSet available = new BitSet();
@@ -107,6 +145,11 @@ public class TicTacToeAI {
         return list.get(0);
     }
 
+    /**
+     * Plays this AI's turn as the next available position. Very predictable.
+     *
+     * @return the position the AI played
+     */
     public int playFirstAvailablePosition() {
         final int position = this.game.getPlayed().nextClearBit(0);
         this.game.playPosition(position);

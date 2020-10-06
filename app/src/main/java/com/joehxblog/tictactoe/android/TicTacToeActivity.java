@@ -1,11 +1,7 @@
 package com.joehxblog.tictactoe.android;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,7 +24,7 @@ import static com.joehxblog.tictactoe.logic.TicTacToeAI.Difficulty;
 
 public class TicTacToeActivity extends AppCompatActivity {
 
-    private enum SETTINGS {SINGLE_PLAYER, DIFFICULTY, GAMEHASH};
+    private enum SETTINGS {SINGLE_PLAYER, DIFFICULTY, GAMEHASH}
 
     private final Button[][] buttons = new Button[3][3];
     private final TicTacToeGame game = new TicTacToeGame();
@@ -73,18 +69,23 @@ public class TicTacToeActivity extends AppCompatActivity {
         return true;
     }
 
-    private void setSinglePlayerFromPreferences(SharedPreferences sharedPreferences, Menu menu) {
+    private void setSinglePlayerFromPreferences(final SharedPreferences sharedPreferences, final Menu menu) {
         this.singlePlayer = sharedPreferences.getBoolean(SETTINGS.SINGLE_PLAYER.toString(), true);
         menu.findItem(R.id.single_player).setChecked(this.singlePlayer);
     }
 
-    private void setDifficultyFromPreferences(SharedPreferences sharedPreferences, Menu menu) {
+    private void setDifficultyFromPreferences(final SharedPreferences sharedPreferences, final Menu menu) {
         final String difficultyString = sharedPreferences.getString(SETTINGS.DIFFICULTY.toString(), Difficulty.EASY.toString());
         final Difficulty difficulty = Difficulty.valueOf(difficultyString);
         this.ai.setDifficulty(difficulty);
         menu.findItem(difficulty.getMenuId()).setChecked(true);
     }
 
+    /**
+     * Resets and starts a new game.
+     *
+     * @param item the MenuItem that called this method
+     */
     public void newGame(final MenuItem item) {
         this.game.reset();
         Arrays.stream(this.buttons).flatMap(Arrays::stream).forEach(b -> {
@@ -95,6 +96,11 @@ public class TicTacToeActivity extends AppCompatActivity {
         text.setText("");
     }
 
+    /**
+     * Changes the difficulty based on the selected menu item
+     *
+     * @param item the MenuItem that called this method
+     */
     public void setDifficulty(@NotNull final MenuItem item) {
         final Difficulty difficulty = Difficulty.getByMenuId(item.getItemId());
         this.ai.setDifficulty(difficulty);
@@ -105,7 +111,14 @@ public class TicTacToeActivity extends AppCompatActivity {
         item.setChecked(true);
     }
 
-    public void toggleSinglePlayer(MenuItem item) {
+    /**
+     * Toggles the single player mode. If the mode is currently single-player, then changes
+     * it to two-player. Conversely, if the mode is currently two-player, changes it to
+     * single-player.
+     *
+     * @param item the MenuItem that called this method
+     */
+    public void toggleSinglePlayer(final MenuItem item) {
         this.singlePlayer = !this.singlePlayer;
         item.setChecked(this.singlePlayer);
 
@@ -134,7 +147,7 @@ public class TicTacToeActivity extends AppCompatActivity {
             setWinnerText();
         } else if (this.game.isStalemate()) {
             setStalemateText();
-        } else if (singlePlayer) {
+        } else if (this.singlePlayer) {
             playAi();
         }
 
@@ -143,8 +156,8 @@ public class TicTacToeActivity extends AppCompatActivity {
 
     private void playAi() {
         final int position = this.ai.play();
-        int x = position % 3;
-        int y = position / 3;
+        final int x = position % 3;
+        final int y = position / 3;
 
         this.buttons[x][y].setAlpha(0.0f);
 
@@ -177,7 +190,7 @@ public class TicTacToeActivity extends AppCompatActivity {
         text.setText(R.string.stalemate_text);
     }
 
-    private void playButton(int x, int y) {
+    private void playButton(final int x, final int y) {
         this.buttons[x][y].setClickable(false);
         this.buttons[x][y].setText(Character.toString(this.game.getValue(x, y)));
     }
