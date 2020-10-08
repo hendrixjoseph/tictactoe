@@ -10,9 +10,7 @@ This version of Tic Tac Toe has three difficulties: Easy, Medium, and Hard. It a
 
 # Screenshots
 
-![New Game](/app-store-stuff/phone-screenshot-1.png)
-![Won Game](/app-store-stuff/phone-screenshot-2.png)
-![Settings Menu](/app-store-stuff/phone-screenshot-3.png)
+<img src="/app-store-stuff/phone-screenshot-1.png" alt="New Game" width="33%" />&nbsp;<img src="/app-store-stuff/phone-screenshot-2.png" alt="Won Game" width="33%" />&nbsp;<img src="/app-store-stuff/phone-screenshot-3.png" alt="Settings Menu" width="33%" />
 
 # Availabilty
 
