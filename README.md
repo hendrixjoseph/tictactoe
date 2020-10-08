@@ -16,4 +16,4 @@ This version of Tic Tac Toe has three difficulties: Easy, Medium, and Hard. It a
 
 * [Tic Tac Toe on Google Play](https://play.google.com/store/apps/details?id=com.joehxblog.tictactoe)
 * [Tic Tac Toe on Amazon App Store](https://www.amazon.com/gp/product/B08KTWMYRK)
-* [Tic Tac Toe on GitHub (the releases section)[https://github.com/hendrixjoseph/tictactoe/releases/tag/1.0]
+* [Tic Tac Toe on GitHub (the releases section)](https://github.com/hendrixjoseph/tictactoe/releases/tag/1.0)
