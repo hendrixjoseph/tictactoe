@@ -36,6 +36,8 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.0.1")
     implementation("androidx.gridlayout:gridlayout:1.0.0")
     implementation("androidx.preference:preference:1.1.1")
+    implementation("com.intuit.sdp:sdp-android:1.0.6")
+    implementation("com.intuit.ssp:ssp-android:1.0.6")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.0-M2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.0-M2")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.0-M2")
