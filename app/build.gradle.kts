@@ -32,10 +32,10 @@ dependencies {
 
     implementation(libs.appcompat)
     implementation(libs.material)
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.gridlayout:gridlayout:1.0.0")
-    implementation("androidx.preference:preference:1.1.1")
+    implementation("androidx.preference:preference:1.2.1")
     implementation("com.intuit.sdp:sdp-android:1.0.6")
     implementation("com.intuit.ssp:ssp-android:1.0.6")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.0-M2")
