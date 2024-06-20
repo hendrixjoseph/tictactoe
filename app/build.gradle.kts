@@ -32,7 +32,13 @@ dependencies {
 
     implementation(libs.appcompat)
     implementation(libs.material)
-    testImplementation(libs.junit)
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.0-M2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.0-M2")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.0-M2")
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+}
+
+tasks.withType<Test>  {
+    useJUnitPlatform()
 }
