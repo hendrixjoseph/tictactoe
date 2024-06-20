@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/new_game"
+         app:showAsAction="ifRoom"
+         android:onClick="newGame"/>
+    <item android:title="@string/single_player"
+        android:id="@+id/single_player"
+        android:checkable="true"
+        android:onClick="toggleSinglePlayer" />
+    <group android:checkableBehavior="single">
+        <item android:title="@string/easy_difficulty"
+            android:id="@+id/easy_difficulty"
+            android:onClick="setDifficulty" />
+        <item android:title="@string/medium_difficulty"
+            android:id="@+id/medium_difficulty"
+            android:onClick="setDifficulty" />
+        <item android:title="@string/hard_difficulty"
+            android:id="@+id/hard_difficulty"
+            android:onClick="setDifficulty"/>
+    </group>
+</menu>

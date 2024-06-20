@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Tic Tac Toe</string>
+    <string name="new_game">New Game</string>
+
+    <!-- win/stalemate texts -->
+    <string name="stalemate_text">It\'s a tie!</string>
+    <string name="winner_text_template">%c has won!</string>
+
+    <!-- one player vs two player -->
+    <string name="single_player">Single Player</string>
+    <string name="two_player">Two Player</string>
+
+    <!-- difficulties -->
+    <string name="easy_difficulty">Easy</string>
+    <string name="medium_difficulty">Medium</string>
+    <string name="hard_difficulty">Hard</string>
 </resources>
