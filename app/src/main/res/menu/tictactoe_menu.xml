@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="@string/new_game"
-         app:showAsAction="ifRoom"
-         android:onClick="newGame"/>
-    <item android:title="@string/single_player"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:onClick="newGame"
+        android:title="@string/new_game"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/single_player"
         android:checkable="true"
-        android:onClick="toggleSinglePlayer" />
+        android:onClick="toggleSinglePlayer"
+        android:title="@string/single_player" />
     <group android:checkableBehavior="single">
-        <item android:title="@string/easy_difficulty"
+        <item
             android:id="@+id/easy_difficulty"
-            android:onClick="setDifficulty" />
-        <item android:title="@string/medium_difficulty"
+            android:onClick="setDifficulty"
+            android:title="@string/easy_difficulty" />
+        <item
             android:id="@+id/medium_difficulty"
-            android:onClick="setDifficulty" />
-        <item android:title="@string/hard_difficulty"
+            android:onClick="setDifficulty"
+            android:title="@string/medium_difficulty" />
+        <item
             android:id="@+id/hard_difficulty"
-            android:onClick="setDifficulty"/>
+            android:onClick="setDifficulty"
+            android:title="@string/hard_difficulty" />
     </group>
 </menu>

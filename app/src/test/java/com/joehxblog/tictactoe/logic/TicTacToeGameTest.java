@@ -37,7 +37,7 @@ class TicTacToeGameTest {
     @ParameterizedTest
     @MethodSource("com.joehxblog.tictactoe.logic.TestHelper#positions")
     void canPlayPosition_New(final int x, final int y) {
-        assertTrue(this.game.canPlayPosition(x,y));
+        assertTrue(this.game.canPlayPosition(x, y));
     }
 
     @Test

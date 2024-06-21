@@ -9,25 +9,25 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class TestHelper {
-   static Stream<Arguments> positions() {
-      final List<Arguments> list = new ArrayList<>();
+    static Stream<Arguments> positions() {
+        final List<Arguments> list = new ArrayList<>();
 
-      for (int i = 0; i < 3; i++) {
-         for (int j = 0; j < 3; j++) {
-            list.add(arguments(i,j));
-         }
-      }
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                list.add(arguments(i, j));
+            }
+        }
 
-      return list.stream();
-   }
+        return list.stream();
+    }
 
-   static List<int[]> createPlays(final int... plays) {
-      final List<int[]> list = new ArrayList<>();
+    static List<int[]> createPlays(final int... plays) {
+        final List<int[]> list = new ArrayList<>();
 
-      for (int i = 0; i < plays.length - 1; i = i + 2) {
-         list.add(new int[]{plays[i], plays[i + 1]});
-      }
+        for (int i = 0; i < plays.length - 1; i = i + 2) {
+            list.add(new int[]{plays[i], plays[i + 1]});
+        }
 
-      return list;
-   }
+        return list;
+    }
 }

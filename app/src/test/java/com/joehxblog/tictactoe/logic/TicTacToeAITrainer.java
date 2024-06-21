@@ -69,13 +69,13 @@ class TicTacToeAITrainer {
 
         out.close();
 
-        final StringJoiner outer = new StringJoiner(",","{","}");
+        final StringJoiner outer = new StringJoiner(",", "{", "}");
 
         this.winMap.forEach((hash, map) -> {
-            final StringJoiner inner = new StringJoiner(",","{","}");
+            final StringJoiner inner = new StringJoiner(",", "{", "}");
             inner.add(Integer.toString(hash));
 
-            map.forEach((k,v) -> {
+            map.forEach((k, v) -> {
                 inner.add(Integer.toString(k));
                 inner.add(Integer.toString(v));
             });

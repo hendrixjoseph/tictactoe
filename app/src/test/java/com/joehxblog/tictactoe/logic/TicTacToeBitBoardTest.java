@@ -19,14 +19,11 @@ class TicTacToeBitBoardTest {
     TicTacToeBitBoard board;
 
     static Stream<List<int[]>> winningPlays() {
-        return Stream.of(createPlays(0,0, 0,1, 0,2),
-                createPlays(0,0, 1,0, 2,0));
+        return Stream.of(createPlays(0, 0, 0, 1, 0, 2), createPlays(0, 0, 1, 0, 2, 0));
     }
 
     static Stream<List<int[]>> losingPlays() {
-        return Stream.of(Collections.emptyList(),
-                createPlays(0,0),
-                createPlays(0,0, 0,1));
+        return Stream.of(Collections.emptyList(), createPlays(0, 0), createPlays(0, 0, 0, 1));
     }
 
     @BeforeEach
@@ -40,7 +37,7 @@ class TicTacToeBitBoardTest {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                shouldBeFalse = shouldBeFalse || this.board.getPosition(i,j);
+                shouldBeFalse = shouldBeFalse || this.board.getPosition(i, j);
             }
         }
 
@@ -50,11 +47,11 @@ class TicTacToeBitBoardTest {
     @ParameterizedTest
     @MethodSource("com.joehxblog.tictactoe.logic.TestHelper#positions")
     void playPosition(final int x, final int y) {
-        assertFalse(this.board.getPosition(x,y));
+        assertFalse(this.board.getPosition(x, y));
 
-        this.board.playPosition(x,y);
+        this.board.playPosition(x, y);
 
-        assertTrue(this.board.getPosition(x,y));
+        assertTrue(this.board.getPosition(x, y));
     }
 
     @Test

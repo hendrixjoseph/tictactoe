@@ -19,8 +19,7 @@ class TicTacToeAITest {
     @Test
     void playRandomPosition() {
         final int position = this.ai.playRandomPosition();
-        assertAll(() -> assertTrue(position >= 0),
-                  () -> assertTrue(position < 9));
+        assertAll(() -> assertTrue(position >= 0), () -> assertTrue(position < 9));
     }
 
     @Test
@@ -29,6 +28,4 @@ class TicTacToeAITest {
             assertEquals(i, this.ai.playFirstAvailablePosition());
         }
     }
-
-
 }
