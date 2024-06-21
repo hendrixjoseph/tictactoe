@@ -58,12 +58,17 @@ public class TicTacToeBitBoard {
      * @return true if this board is in a winning position, false otherwise
      */
     public boolean hasWon() {
-        // horizontals
-        return this.board.get(0, 3).cardinality() == BOARD_SIZE || this.board.get(3, 6).cardinality() == BOARD_SIZE || this.board.get(6, 9).cardinality() == BOARD_SIZE
+               // horizontals
+        return this.board.get(0, 3).cardinality() == BOARD_SIZE
+            || this.board.get(3, 6).cardinality() == BOARD_SIZE
+            || this.board.get(6, 9).cardinality() == BOARD_SIZE
                 // verticals
-                || this.board.get(0) && this.board.get(3) && this.board.get(6) || this.board.get(1) && this.board.get(4) && this.board.get(7) || this.board.get(2) && this.board.get(5) && this.board.get(8)
+            || this.board.get(0) && this.board.get(3) && this.board.get(6)
+            || this.board.get(1) && this.board.get(4) && this.board.get(7)
+            || this.board.get(2) && this.board.get(5) && this.board.get(8)
                 // diagonals
-                || this.board.get(0) && this.board.get(4) && this.board.get(8) || this.board.get(2) && this.board.get(4) && this.board.get(6);
+            || this.board.get(0) && this.board.get(4) && this.board.get(8)
+            || this.board.get(2) && this.board.get(4) && this.board.get(6);
     }
 
     /**
