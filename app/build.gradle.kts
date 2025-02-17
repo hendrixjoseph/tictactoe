@@ -10,7 +10,7 @@ android {
         applicationId = "com.joehxblog.tictactoe"
         minSdk = 24
         targetSdk = 35
-        versionCode = 2
+        versionCode = 3
         versionName = "1.24.35"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
