@@ -4,14 +4,14 @@ plugins {
 
 android {
     namespace = "com.joehxblog.tictactoe"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.joehxblog.tictactoe"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 35
         versionCode = 2
-        versionName = "1.24.34"
+        versionName = "1.24.35"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
