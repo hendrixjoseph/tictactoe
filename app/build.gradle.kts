@@ -4,14 +4,14 @@ plugins {
 
 android {
     namespace = "com.joehxblog.tictactoe"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.joehxblog.tictactoe"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 3
-        versionName = "1.24.35"
+        versionName = "1.24.36"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -23,8 +23,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 }
 
